@@ -5,11 +5,14 @@ import { HomeRight } from './HomeRight';
 import { FriendsRecommended } from './FriendsRecommended';
 import { HomeChat } from './../modals/HomeChat';
 import { useSelector } from 'react-redux';
+import { Nav } from './Nav';
 
 export const Home = () => {
   const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
   return (
-    <div className={`${isDarkMode ? 'dark' : ''}        `}>
+    <div className={`${isDarkMode ? 'dark' : ''}      overflow-auto   `}>
+      <Nav></Nav>
+
       <div className="   pt-0      grid gap-0 grid-cols-1 md:grid-cols-5 md:gap-4 xl:grid-cols-5 bg-bglight dark:bg-bgdark p-4">
         <HomeLeft></HomeLeft>
         <HomeCenter></HomeCenter>

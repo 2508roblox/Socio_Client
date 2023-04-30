@@ -1,13 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@layer base{
+
+@layer base {
+    * {
+        @apply transition-all ease-linear
+    }
+
     body {
         @apply font-semibold
     }
+
+    img {
+        @apply object-cover
+    }
 }
+
 @layer components {
-    .btn-green{
+    .btn-green {
         @apply font-medium bg-greenyellow rounded-lg text-black px-4 py-2
     }
 }

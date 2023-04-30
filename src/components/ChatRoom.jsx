@@ -9,7 +9,7 @@ export const ChatRoom = ({ setIsOpenChatModal }) => {
                 setIsOpenChatModal(true)
             }} className="flex cursor-pointer items-center gap-2 dark:text-white text-black hover:shadow-2xl p-1 rounded-lg">
                 <div className="relative">
-                    <img className='rounded-full' width={'45px'} src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
+                    <img className='rounded-full h-[45px] min-w-[45px] object-cover' width={'45px'} src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
                     <div className="statusDot p-1 right-[.1rem] bottom-[.2rem] absolute rounded-full bg-greenyellow">
 
                     </div>

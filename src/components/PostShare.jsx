@@ -15,7 +15,7 @@ export const PostShare = () => {
         <div className={`${isDarkMode ? 'dark' : ''} `}>
             <div className="    shadow-xl postShare p-4 bg-bgmlight dark:bg-bgmdark rounded-2xl">
                 <div className="flex gap-4 items-start ">
-                    <img width={'50px'} height={'50px'} className='h-[50px] rounded-full border-2 border-bgdark' src="https://source.unsplash.com/240x320/?portrait?0" alt="" />
+                    <img className="rounded-full h-[50px] object-cover min-w-[50px]" width="50px" src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
                     <div className="grid w-full  flex-col gap-4">
                         <input onFocus={() => { setIsOpen(prev => !prev) }} className='   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark ' type="text" placeholder=' Tell your friends about your thoughts...' name="" id="" />
                         <div className="grid grid-cols-4 gap-4">

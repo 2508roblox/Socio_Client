@@ -44,22 +44,21 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
             <div className={`  fixed  items-center justify-center z-50 w-full h-full top-0 left-0 ${isOpen ? 'flex' : 'hidden'} `}>
                 <div className="  dark:bg-bgmdark bg-bgmlight flex flex-col items-center rounded-xl z-50 p-4 gap-4">
 
-                    <div className="  w-full flex  flex-row rounded-xl items-center justify-between px-4 py-2 dark:bg-btnGrayLight bg-bglight gap-20">
-                        <div className="flex gap-2 items-center ">
-                            <img className=' rounded-full' width={'50px'} src="	  https://source.unsplash.com/240x320/?portrait?0" alt="" />
-                            <textarea onChange={(e) => {
-                                handleWriteContent(e.target.value)
-                            }} value={postContent} type="text" className='bg-transparent border-0 border-transparent outline-none dark:text-white text-black' placeholder="What's in your mind, Evgen " id="w3review" name="w3review" rows="4" cols="50">
+                    <div className="w-full flex flex-row rounded-xl items-center justify-between px-4 py-2 dark:bg-btnGrayLight bg-bglight gap-20">
+                        <div className="flex gap-4 items-center">
+                            <img className="rounded-full h-[50px] object-cover min-w-[50px]" width="50px" src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
 
-                            </textarea>
+                            <input onChange={(e) => {
+                                handleWriteContent(e.target.value)
+                            }} value={postContent} type="text" className="w-[5rem] md:w-full bg-transparent border-0 border-transparent outline-none dark:text-white text-black" placeholder="What's in your mind, Evgen " id="w3review" name="w3review" rows="4" cols="50" />
 
                         </div>
 
 
                         <div className="relative flex">
-                            <UilSmile onClick={() => { setOpenEmoji(prev => !prev) }} className='dark:text-white text-black'></UilSmile>
-                            {openEmoji ? <div className=" absolute left-[-10rem] top-7 z-50">
-                                <EmojiPicker width={300} height={400} className='hidden' onEmojiClick={onEmojiClick} />
+                            <UilSmile onClick={() => { setOpenEmoji(prev => !prev) }} className="dark:text-white text-black"></UilSmile>
+                            {openEmoji ? <div className="absolute left-[-10rem] top-7 z-50">
+                                <EmojiPicker width={300} height={400} className="hidden" onEmojiClick={onEmojiClick} />
                             </div> : ''}
 
                         </div>
@@ -69,7 +68,7 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
                     <div className={`grid ${mediaFile.length === 1 ? 'grid-cols-1' : mediaFile.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} max-w-[700px] gap-4`}>
                         {mediaFile.length > 0 && mediaFile.map(img =>
                             <div className="relative">
-                                <img className='rounded-xl' src={img} alt="" />
+                                <img className='rounded-xl lg:w-full w-[150px]' src={img} alt="" />
                                 <UilMultiply onClick={() => {
                                     handleRemoveMedia(img)
                                 }} className='text-[10px] dark:bg-bgmdark bg-bgmlight rounded-full p-1 dark:text-white text-black absolute top-2 right-2'></UilMultiply>
@@ -94,7 +93,7 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
                 <div onClick={() => {
                     setIsOpen(prev => !prev)
                 }} className="close absolute top-0 bottom-0 left-0 right-0  bg-bgdark bg-opacity-80 ">
-                    ca
+
                 </div>
             </div >
         </div >
