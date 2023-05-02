@@ -7,21 +7,38 @@ import { UilListUl } from '@iconscout/react-unicons'
 import { UilCalendarAlt } from '@iconscout/react-unicons'
 //emoji
 import EmojiPicker from 'emoji-picker-react';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { UilMessage } from '@iconscout/react-unicons'
+import { CreatePostAction } from './../action/PostAction';
+import dfAvatar from '../assets/img/defaultAvatar.png';
+import uploadToFirebase from '../firebase/Upload'
+//
 
+//
 export const CreatePost = ({ isOpen, setIsOpen }) => {
+    
+
+    //config
+    const dispatch = useDispatch()
+
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
 
     const inputMedia = useRef()
     const [mediaFile, setMediaFile] = useState([])
     const [openEmoji, setOpenEmoji] = useState(false)
     const [postContent, setPostContent] = useState('')
+    // state redux
+    const AuthData = useSelector(state => state.AuthReducer.user)
+    //handle
     const handleAddPhoto = () => {
         inputMedia.current.click()
     }
-    const handleShowImg = () => {
+    const handleShowImg = async () => {
+        let url = await uploadToFirebase(inputMedia.current.files[0])
+        console.log('urrl', url)
         console.log(inputMedia.current.files)
-        setMediaFile(prev => [...prev, URL.createObjectURL(inputMedia.current.files[0])])
+        setMediaFile(prev => [...prev, url])
+        console.log(mediaFile)
     }
     const handleRemoveMedia = (url) => {
         let MediaTemp = mediaFile ? [...mediaFile] : [];
@@ -39,6 +56,26 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
     const handleWriteContent = (data) => {
         setPostContent(data)
     }
+    //create POST
+    const handleCreatePost = (e) => {
+        e.preventDefault()
+        let PostData = {
+            userid: AuthData?._id,
+            content: postContent,
+            media: [...mediaFile]
+
+        }
+
+        if (AuthData?._id) {
+            dispatch(CreatePostAction(PostData))
+            setPostContent('')
+            setMediaFile([])
+        }
+
+        console.log(PostData, 'post data')
+    }
+
+
     return (
         <div className={`${isDarkMode ? 'dark' : ''} `}>
             <div className={`  fixed  items-center justify-center z-50 w-full h-full top-0 left-0 ${isOpen ? 'flex' : 'hidden'} `}>
@@ -46,7 +83,7 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
 
                     <div className="w-full flex flex-row rounded-xl items-center justify-between px-4 py-2 dark:bg-btnGrayLight bg-bglight gap-20">
                         <div className="flex gap-4 items-center">
-                            <img className="rounded-full h-[50px] object-cover min-w-[50px]" width="50px" src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
+                            <img className="rounded-full h-[50px] object-cover min-w-[50px]" width="50px" src={AuthData?.avatar || dfAvatar} alt="" />
 
                             <input onChange={(e) => {
                                 handleWriteContent(e.target.value)
@@ -55,11 +92,12 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
                         </div>
 
 
-                        <div className="relative flex">
+                        <div className="relative flex gap-2">
                             <UilSmile onClick={() => { setOpenEmoji(prev => !prev) }} className="dark:text-white text-black"></UilSmile>
                             {openEmoji ? <div className="absolute left-[-10rem] top-7 z-50">
                                 <EmojiPicker width={300} height={400} className="hidden" onEmojiClick={onEmojiClick} />
                             </div> : ''}
+                            <UilMessage onClick={(e) => { handleCreatePost(e) }}></UilMessage>
 
                         </div>
                     </div>

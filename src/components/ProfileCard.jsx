@@ -5,38 +5,55 @@ import { UilSetting } from '@iconscout/react-unicons'
 import { UilImageV } from '@iconscout/react-unicons'
 import { UilEdit } from '@iconscout/react-unicons'
 import { UilBag } from '@iconscout/react-unicons'
-
 import { UilHeart } from '@iconscout/react-unicons'
 import { UilWifi } from '@iconscout/react-unicons'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+//img
+import dfAvatar from '../assets/img/defaultAvatar.png';
+import dfCover1 from '../assets/img/df_cover1.jpg';
+import dfCover2 from '../assets/img/df_cover2.jpg';
+import dfCover3 from '../assets/img/df_cover3.jpg';
+import dfCover4 from '../assets/img/df_cover4.jpg';
+import dfCover5 from '../assets/img/df_cover5.jpg';
+import dfCover6 from '../assets/img/df_cover6.jpg';
+import dfCover7 from '../assets/img/df_cover7.jpg';
+import dfCover8 from '../assets/img/df_cover8.jpg';
+import dfCover9 from '../assets/img/df_cover9.jpg';
+import dfCover10 from '../assets/img/df_cover10.jpg';
+import { ProfileEditCover } from './../modals/ProfileEditCover';
 export const ProfileCard = () => {
-    const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
+    const UserData = useSelector(state => state.UserReducer.viewingUser)
+    const AuthData = useSelector(state => state.AuthReducer.user)
 
+    const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
     const [tab, setTab] = useState('profile')
+    //upload cover image
+    const [coverImgUpload, setCoverImgUpload] = useState(null)
+    const [openUpload, setOpenUpload] = useState(false)
 
     return (
         <div className={`${isDarkMode ? 'dark' : ''} `}>
             <div className=" flex flex-col gap-4">
                 <div className=" relative flex shadow-md overflow-hidden dark:bg-bgmdark bg-bgmlight  flex-col rounded-xl gap-[8rem] md:gap-17">
                     <div className="relative">
-                        <img className='w-full  h-[350px] object-cover' src={coverImg} alt="" />
+                        <img className='w-full  h-[350px] object-cover' src={UserData?._id === AuthData?._id ? AuthData?.coverimage || dfCover1 : UserData?.coverimage || dfCover1} alt="" />
                         <div className="absolute bottom-2 right-2 text-black dark:text-white flex gap-4">
-                            <UilImageV className='p-1 dark:bg-bgmdark bg-bgmlight  rounded-sm' width='30px' height='30px'></UilImageV>
-                            <UilEdit className='p-1 dark:bg-bgmdark bg-bgmlight  rounded-sm' width='30px' height='30px'></UilEdit>
+                            <UilImageV className='z-50 p-1 dark:bg-bgmdark bg-bgmlight  rounded-sm' width='30px' height='30px'></UilImageV>
+                            <UilEdit onClick={() => { setOpenUpload(prev => !prev) }} className='z-50 p-1 dark:bg-bgmdark bg-bgmlight  rounded-sm' width='30px' height='30px'></UilEdit>
                         </div>
                     </div>
                     <div className=" p-4 flex-col flex md:flex-row items-center md:items-end justify-between absolute w-full bottom-14 md:bottom-20">
                         <div className=" flex-col flex md:flex-row  md:gap-4 items-center md:items-end text-black dark:text-white ml-0 md:ml-[10%]">
-                            <img className='   border-white border-4 dark:border-black dark:border-[10px] w-[150px] h-[150px] md:w-[170px] md:rounded-lg rounded-full md:h-[230px] object-cover' src="https://rare-gallery.com/uploads/posts/4519405-knight-armor-dark-background-fantasy-art.jpg" alt="" />
+                            <img src={UserData?.avatar || dfAvatar} className='   border-white border-4 dark:border-black dark:border-[10px] w-[150px] h-[150px] md:w-[170px] md:rounded-lg rounded-full md:h-[230px] object-cover' alt="" />
                             <div className="md:text-start text-center">
                                 <h1 className='flex gap-2 md:justify-start justify-center items-center text-xl'>
-                                    <p>Evgen Ledo</p>
+                                    <p className='capitalize'>{UserData?.firstname + ' ' + UserData?.lastname}</p>
                                     <UilSetting></UilSetting>
 
                                 </h1>
-                                <p className='text-sm'>@ledoteam</p>
-                                <p className='text-[.7rem] text-gray-400'>Art Direction UX/UI DESIGNER Founder off AdzeDesign
+                                <p className='text-sm'>@{UserData?.username}</p>
+                                <p className='text-[.7rem] text-gray-400'>{ }
                                 </p>
 
                             </div>
@@ -78,7 +95,11 @@ export const ProfileCard = () => {
                     </div>
                 </div>
             </div>
+            {openUpload &&
+                <ProfileEditCover setOpenUpload={setOpenUpload}></ProfileEditCover>
 
+
+            }
         </div>
     )
 }

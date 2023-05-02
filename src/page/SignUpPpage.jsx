@@ -14,6 +14,8 @@ export const SignUpPpage = () => {
     const [RegisterData, setRegisterData] = useState({ username: '', password: '', firstname: '', lastname: '', confirmpassword: '' })
     // redux state
     const UserData = useSelector(state => state.AuthReducer.user)
+    const isLoading = useSelector(state => state.AuthReducer.isLoading)
+    const isErr = useSelector(state => state.AuthReducer.isErr)
     useEffect(() => {
         if (UserData) {
             navigate('/', { replace: true });
@@ -73,7 +75,18 @@ export const SignUpPpage = () => {
                         <input onChange={(e) => { handleChange(e) }} type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" className="w-full text-black px-4 py-3 bg-bglight rounded-md dark:border-gray-700 dark:bg-bgdark dark:text-gray-100 focus:dark:border-violet-400" />
 
                     </div>
-                    <button onClick={(e) => { handleLogin(e) }} className="block w-full p-3 text-center bg-blue-500 text-white rounded-sm dark:text-gray-900 dark:bg-greenyellow">Register</button>
+                    {isErr ?
+                        <p className='text-red-600 text-sm'>Username has been taken</p>
+                        :
+                        ''
+
+                    }
+                    {isLoading ?
+                        <button onClick={(e) => { handleLogin(e) }} className="block w-full p-3 text-center bg-blue-500 text-white rounded-sm opacity-70 dark:text-gray-900 dark:bg-greenyellow">Loading</button>
+                        :
+                        <button onClick={(e) => { handleLogin(e) }} className="block w-full p-3 text-center bg-blue-500 text-white rounded-sm dark:text-gray-900 dark:bg-greenyellow">Register</button>
+
+                    }
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
                     <div className="flex-1 h-px sm:w-16 dark:bg-gray-700 bg-gray-500"></div>

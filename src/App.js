@@ -12,6 +12,7 @@ import { EcommercePage } from './page/EcommercePage';
 import { MessagePage } from './page/MessagePage';
 import { LoginPage } from './page/LoginPage';
 import { SignUpPpage } from './page/SignUpPpage';
+import { CommunityPage } from './page/CommunityPage';
 function App() {
   const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/message/*" Component={MessagePage} /> {/* Use the render prop to specify the component to be rendered */}
           <Route path="/login/*" Component={LoginPage} /> {/* Use the render prop to specify the component to be rendered */}
           <Route path="/register/*" Component={SignUpPpage} /> {/* Use the render prop to specify the component to be rendered */}
+          <Route path="/community/*" Component={CommunityPage} /> {/* Use the render prop to specify the component to be rendered */}
         </Routes>
       </div>
     </div>

@@ -21,6 +21,18 @@ export const LoginPage = () => {
         e.preventDefault()
         dispatch(LoginAction(LoginData))
     }
+    // navigate
+    const UserData = useSelector(state => state.AuthReducer.user)
+    const isLoading = useSelector(state => state.AuthReducer.isLoading)
+    const isWrongPassword = useSelector(state => state.AuthReducer.isWrongPassword)
+    useEffect(() => {
+        if (UserData) {
+            navigate('/', { replace: true });
+        } else {
+            navigate('/login', { replace: true });
+        }
+    }, [UserData, navigate]);
+
     return (
         <div className="h-[100vh] flex items-center justify-center">
             <div className="w-full max-w-md p-8 space-y-3  bg-bgmlight shadow-lg rounded-lg dark:bg-bgmdark dark:text-gray-100">
@@ -41,8 +53,13 @@ export const LoginPage = () => {
                             <a rel="noopener noreferrer" href="#">Forgot Password?</a>
                         </div>
                     </div>
+                    {isWrongPassword ? <><p className='text-red-600 text-sm'>Check your username or password!</p></> : ''}
+                    {isLoading ?
+                        <button onClick={(e) => { handleLogin(e) }} className="block w-full p-3 text-center bg-blue-700 text-white rounded-sm dark:text-gray-900 dark:bg-greenyellow">Loading</button>
+                        :
 
-                    <button onClick={(e) => { handleLogin(e) }} className="block w-full p-3 text-center bg-blue-500 text-white rounded-sm dark:text-gray-900 dark:bg-greenyellow">Login</button>
+                        <button onClick={(e) => { handleLogin(e) }} className="block w-full p-3 text-center bg-blue-500 text-white rounded-sm dark:text-gray-900 dark:bg-greenyellow">Login</button>
+                    }
 
                 </form>
                 <div className="flex items-center pt-4 space-x-1">

@@ -1,21 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UilEstate } from '@iconscout/react-unicons'
 import { UilFacebook } from '@iconscout/react-unicons'
 import { UilShop } from '@iconscout/react-unicons'
 import { UilHipchat } from '@iconscout/react-unicons'
 import { UilUsersAlt } from '@iconscout/react-unicons'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Notifications } from './../modals/Notifications';
 import { useDispatch, useSelector } from 'react-redux'
-
+import dfAvatar from '../assets/img/defaultAvatar.png';
+import dfCover1 from '../assets/img/df_cover1.jpg';
+import dfCover2 from '../assets/img/df_cover2.jpg';
+import dfCover3 from '../assets/img/df_cover3.jpg';
+import dfCover4 from '../assets/img/df_cover4.jpg';
+import dfCover5 from '../assets/img/df_cover5.jpg';
+import dfCover6 from '../assets/img/df_cover6.jpg';
+import dfCover7 from '../assets/img/df_cover7.jpg';
+import dfCover8 from '../assets/img/df_cover8.jpg';
+import dfCover9 from '../assets/img/df_cover9.jpg';
+import dfCover10 from '../assets/img/df_cover10.jpg';
 export const Nav = () => {
+
     //config
     const dispatch = useDispatch()
     //state
+
     const [acticeIcon, setActiveIcon] = useState('home')
     const [isOpenSetting, setIsOpenSetting] = useState(false)
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
+    // redux
+    const UserData = useSelector(state => state.AuthReducer.user)
+    const navigate = useNavigate();
+
+    // effect 
+
     //handle
     const handleToggle = () => {
         setIsDarkTheme(!isDarkTheme);
@@ -134,68 +152,77 @@ export const Nav = () => {
 
 
                     </div>
-                    <div className="hidden relative md:flex align-middle  items-center gap-2 text-black dark:text-white  rounded-xl px-4 py-2 justify-end " >
+                    <div className=" hidden relative md:flex align-middle  items-center gap-2 text-black dark:text-white  rounded-xl px-4 py-2 justify-end " >
 
-                        <div className="relative items-center inline-block text-left">
-                            <div>
-                                <button onClick={() => { setIsOpenSetting(prev => !prev) }} type="button" className="z-50 border-0 inline-flex text-black dark:text-white dark:bg-bgmdark items-center w-full justify-center gap-x-1.5 rounded-md bg-bgmlight  shadow-bgmdark px-3 py-2 text-sm font-semibold  shadow-sm ring-1 ring-inset dark:hover:bg-gray-700  hover:bg-gray-200" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                    <img className='rounded-full h-[40px]' width={'40px'} src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
-                                    Evgen Ledo
-                                    <svg className={`-mr-1 h-5 w-5 ${isDarkMode ? 'text-gray-400' : 'text-black'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
+                        {UserData ?
+
+                            <div className="relative items-center inline-block text-left">
+                                <div>
+                                    <button onClick={() => { setIsOpenSetting(prev => !prev) }} type="button" className="z-50 border-0 inline-flex text-black dark:text-white dark:bg-bgmdark items-center w-full justify-center gap-x-1.5 rounded-md bg-bgmlight  shadow-bgmdark px-3 py-2 text-sm font-semibold  shadow-sm ring-1 ring-inset dark:hover:bg-gray-700  hover:bg-gray-200" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <img className='rounded-full h-[40px]' width={'40px'} src={UserData.avatar || dfAvatar} alt="" />
+                                        {UserData.firstname + " " + UserData.lastname}
+                                        <svg className={`-mr-1 h-5 w-5 ${isDarkMode ? 'text-gray-400' : 'text-black'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
 
 
-                            {isOpenSetting &&
-                                <div className={`${isDarkMode ? 'dark' : ''}`}>
-                                    <div className={` absolute   right-0 z-50 mt-2 w-56 origin-top-right text-black dark:text-white rounded-md bg-bgmlight dark:bg-bgmdark shadow-md  ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                        <div className="py-1" role="none">
-                                            <a href="#" className="text-black dark:text-white block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">
-                                                Account
-                                            </a>
-                                            <a href="#" className="text-black dark:text-white block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">
-                                                Support
-                                            </a>
-                                            <a href="#" className="text-black dark:text-white  px-4 py-2 text-sm flex justify-between" role="menuitem" tabIndex="-1" id="menu-item-2">
-                                                <p>Theme</p>
-                                                <button
-                                                    id="toggleButton"
-                                                    className={`  -all        toggle-button w-12 h-6 rounded-full p-1 flex items-center  ${isDarkTheme ? 'bg-fontGray justify-end' : 'bg-gray-300 justify-start'
-                                                        }`}
-                                                    onClick={handleToggle}
-                                                >
-                                                    <div
-                                                        id="toggleCircle"
-                                                        className={` bg-white w-4 h-4 rounded-full shadow-md   -all      ${isDarkTheme ? 'ml-1' : 'mr-1'}`}
-                                                    ></div>
-                                                </button>
-                                            </a>
-                                            <form method="POST" action="#" role="none">
-                                                <Link to={'../login'} onClick={() => { dispatch({ type: "LOGOUT" }) }}>
+                                {isOpenSetting &&
+                                    <div className={`${isDarkMode ? 'dark' : ''}`}>
+                                        <div className={` absolute   right-0 z-50 mt-2 w-56 origin-top-right text-black dark:text-white rounded-md bg-bgmlight dark:bg-bgmdark shadow-md  ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                            <div className="py-1" role="none">
+                                                <a href="#" className="text-black dark:text-white block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">
+                                                    Account
+                                                </a>
+                                                <a href="#" className="text-black dark:text-white block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">
+                                                    Support
+                                                </a>
+                                                <a href="#" className="text-black dark:text-white  px-4 py-2 text-sm flex justify-between" role="menuitem" tabIndex="-1" id="menu-item-2">
+                                                    <p>Theme</p>
                                                     <button
-                                                        type="submit"
-                                                        className="text-black dark:text-white block w-full px-4 py-2 text-left text-sm"
-                                                        role="menuitem"
-                                                        tabIndex="-1"
-                                                        id="menu-item-3"
+                                                        id="toggleButton"
+                                                        className={`  -all        toggle-button w-12 h-6 rounded-full p-1 flex items-center  ${isDarkTheme ? 'bg-fontGray justify-end' : 'bg-gray-300 justify-start'
+                                                            }`}
+                                                        onClick={handleToggle}
                                                     >
-                                                        Sign out
+                                                        <div
+                                                            id="toggleCircle"
+                                                            className={` bg-white w-4 h-4 rounded-full shadow-md   -all      ${isDarkTheme ? 'ml-1' : 'mr-1'}`}
+                                                        ></div>
                                                     </button>
-                                                </Link>
-                                            </form>
+                                                </a>
+                                                <form method="POST" action="#" role="none">
+                                                    <Link to={'../login'} onClick={() => { dispatch({ type: "LOGOUT" }) }}>
+                                                        <button
+                                                            type="submit"
+                                                            className="text-black dark:text-white block w-full px-4 py-2 text-left text-sm"
+                                                            role="menuitem"
+                                                            tabIndex="-1"
+                                                            id="menu-item-3"
+                                                        >
+                                                            Sign out
+                                                        </button>
+                                                    </Link>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
+                                }
+                            </div>
+                            :
+                            <Link to={'../login'}>
+                                <button className='btn-green bg-blue-500 dark:bg-greenyellow text-white dark:text-black'>Login</button>
+                            </Link>
+                        }
                         <Notifications></Notifications>
 
 
                     </div>
 
                 </div>
+                {/* {moblie nav} */}
+
                 <div className="fixed rounded-xl  dark:bg-bgmdark bg-bgmlight shadow-md  bottom-0 left-2 right-2 md:hidden  grid grid-cols-1 md:grid-cols-4 py-4 items-center px-4">
                     <div className=" hidden md:flex justify-between items-center text-black dark:text-white gap-4">
                         <Link to={'../'} >               <UilFacebook width="50px" height="50px" className='text-blue-500 dark:text-greenyellow '></UilFacebook>
