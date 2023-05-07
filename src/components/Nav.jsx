@@ -26,8 +26,8 @@ export const Nav = () => {
 
     const [acticeIcon, setActiveIcon] = useState('home')
     const [isOpenSetting, setIsOpenSetting] = useState(false)
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
+    const [isDarkTheme, setIsDarkTheme] = useState(isDarkMode);
     // redux
     const UserData = useSelector(state => state.AuthReducer.user)
     const navigate = useNavigate();

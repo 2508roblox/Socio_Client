@@ -12,73 +12,99 @@ import { useDispatch, useSelector } from 'react-redux'
 import heartImg from '../assets/img/heart.png'
 import axios from 'axios'
 import dfAvatar from '../assets/img/defaultAvatar.png';
+import moment from 'moment'
 
 export const Post = ({ postData }) => {
     const dispatch = useDispatch()
     const imgs = postData.media
     const AuthData = useSelector(state => state.AuthReducer.user)
-    const userPosts = useSelector(state => state.PostReducer.userPosts)
+    const viewingUser = useSelector(state => state.UserReducer.viewingUser)
     const isLoading = useSelector(state => state.PostReducer.isLoading)
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
+    const onlineUser = useSelector(state => state.OnlineUserReducer.onlineUser)
+    //temp data
+    const TempUsersData = useSelector(state => state.TempDataReducer.usersData)
 
     const [allContent, setAllContent] = useState(false)
     const [userInfo, setUserInfo] = useState(null)
     useEffect(() => {
 
-        const handleGetUserInfo = async () => {
-            let res = await axios.get('http://localhost:8080/api/v1/users/' + postData.userid)
-            let userData = await res.data
 
-            setUserInfo(userData)
+        const handleGetUserInfo = async () => {
+            //performance
+            if (AuthData._id === postData.userid) {
+                setUserInfo(AuthData)
+            } else if (postData.userid === viewingUser?._id) {
+                setUserInfo(viewingUser)
+
+            } else {
+                let existTemp = TempUsersData.find(e => e._id === postData.userid)
+                if (existTemp) {
+                    setUserInfo(existTemp)
+                } else {
+
+                    let res = await axios.get('http://localhost:8080/api/v1/users/' + postData.userid)
+                    let userData = await res.data
+                    dispatch({ type: 'SAVE_USER_INFO', payload: userData })
+                    setUserInfo(userData)
+                }
+            }
 
         }
         handleGetUserInfo()
         return () => {
-            console.log('Unmounted Post Component');
-        };
+            console.log('clean up')
+        }
     }, [])
 
 
     const [likesCount, setLikesCount] = useState(0)
     const [heartStatus, setHeartStatus] = useState(false)
     useEffect(() => {
-
+        console.log('fetch')
         const handleGetUserInfo = async () => {
             const isLiked = postData.likes.includes(AuthData._id)
-            console.log('compare', isLiked)
             setHeartStatus(isLiked)
             setLikesCount(postData.likes.length)
         }
         handleGetUserInfo()
         return () => {
-            console.log('Unmounted Post Component');
-        };
-    }, [userPosts, isLoading])
+            console.log('clean up')
+        }
+    }, [])
 
     const handleLikePost = async () => {
         if (!heartStatus) {
-            await axios.put(`http://localhost:8080/api/v1/posts/${postData._id}/like`, { userid: AuthData?._id })
             setLikesCount(prev => prev + 1)
             setHeartStatus(true)
+            await axios.put(`http://localhost:8080/api/v1/posts/${postData._id}/like`, { userid: AuthData?._id })
         } else {
-            await axios.put(`http://localhost:8080/api/v1/posts/${postData._id}/unlike`, { userid: AuthData?._id })
             setLikesCount(prev => prev - 1)
             setHeartStatus(false)
+            await axios.put(`http://localhost:8080/api/v1/posts/${postData._id}/unlike`, { userid: AuthData?._id })
 
         }
     }
     return (
         <>
-            {console.log('render',)}
             {userInfo &&
                 <div className={`${isDarkMode ? 'dark' : ''} shadow-lg`}>
                     <div className="  Post flex flex-col gap-4 dark:bg-bgmdark bg-bgmlight p-4 rounded-lg ">
                         <div className="info flex justify-between">
                             <div className="flex items-start gap-2 ">
-                                <img width={'40px'} className='h-[40px] rounded-full ' src={userInfo?.avatar || dfAvatar} alt="" />
+                                <div className="relative">
+                                    {onlineUser?.findIndex(user => user.userId === userInfo?._id) !== -1 ?
+                                        <div className="dot w-[9px] bottom-1 right-0 rounded-full border-[1px] border-white bg-green-500 absolute h-[9px]"></div>
+                                        :
+                                        <div className="dot w-[9px] bottom-1 right-0 rounded-full border-[1px] border-white bg-red-600 absolute h-[9px]"></div>
+                                    }
+
+                                    <img width={'40px'} className='h-[40px] rounded-full ' src={userInfo?.avatar || dfAvatar} alt="" />
+                                </div>
+
                                 <div className="">
                                     <h1 className='text-gray-500 text-sm flex items-center gap-2'>@{userInfo.username} <UilCheck className='bg-blue-500 rounded-full w-[14px] h-[14px] text-white dark:text-white' ></UilCheck></h1>
-                                    <p className='text-black dark:text-white flex items-center gap-2'>{userInfo.firstname + " " + userInfo.lastname} <span className='dot w-1 h-1 rounded-full dark:bg-greenyellow bg-blue-500'></span> <span className='dark:text-greenyellow text-blue-500 text-sm'> {postData.createdAt}</span> </p>
+                                    <p className='text-black dark:text-white flex items-center gap-2'>{userInfo.firstname + " " + userInfo.lastname} <span className='dot w-1 h-1 rounded-full dark:bg-greenyellow bg-blue-500'></span> <span className='dark:text-greenyellow text-blue-500 text-sm'> {moment(postData.createdAt).fromNow() === 'a few seconds ago' ? 'just now' : moment(postData.createdAt).fromNow()}</span> </p>
                                 </div>
                             </div>
                             <UilEllipsisV className='text-black '></UilEllipsisV>
@@ -100,13 +126,17 @@ export const Post = ({ postData }) => {
                         <div className="icon-btn flex flex-row justify-between">
                             <div className="text-black dark:text-white flex  items-center gap-4">
                                 {likesCount}
-                                {heartStatus ? <img onClick={() => {
-                                    handleLikePost()
-                                }} src={heartImg} alt="" width={'40px'} /> :
-                                    <UilHeart onClick={() => {
+                                {heartStatus ? <p
+
+                                    onClick={() => {
                                         handleLikePost()
-                                    }} fill='red ' width="35px" height="35px" ></UilHeart>
-                                }
+                                    }}
+                                >❤️</p> : <p
+                                    onClick={() => {
+                                        handleLikePost()
+                                    }}
+                                >🤍</p>}
+
                                 <UilCommentAltDots width="35px" height="35px"></UilCommentAltDots>
                                 <UilShareAlt width="35px" height="35px"></UilShareAlt>
                             </div>

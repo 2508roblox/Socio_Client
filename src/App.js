@@ -7,19 +7,40 @@ import { Nav } from './components/Nav';
 import { HomePage } from './page/HomePage';
 import { Profile } from './page/Profile';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { EcommercePage } from './page/EcommercePage';
 import { MessagePage } from './page/MessagePage';
 import { LoginPage } from './page/LoginPage';
 import { SignUpPpage } from './page/SignUpPpage';
 import { CommunityPage } from './page/CommunityPage';
+//socket
+import { socket } from './socket'
+
 function App() {
+  //config
+  const dispatch = useDispatch()
   const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
+  const AuthData = useSelector(state => state.AuthReducer.user)
 
-
+  useEffect(() => {
+    if (AuthData?._id) {
+      socket.connect()
+      socket.emit('sendUserId', AuthData?._id)
+    } else {
+      socket.disconnect()
+    }
+  }, [AuthData?._id])
+  // get online user
+  useEffect(() => {
+    socket.on('sendAllOnlineUser', (data) => {
+      console.log(data)
+      dispatch({ type: 'SET_ONLINE_USER', payload: data })
+    })
+  }, [])
 
   return (
     <div className={`${isDarkMode ? 'dark' : ''} `}>
+
       <div className='bg-bglight dark:bg-bgdark flex flex-col justify-start' >
         <Routes>
           <Route path="/*" Component={Home} /> {/* Use the render prop to specify the component to be rendered */}
@@ -32,8 +53,6 @@ function App() {
         </Routes>
       </div>
     </div>
-
-
   );
 }
 

@@ -43,7 +43,7 @@ export const CreatePost = ({ isOpen, setIsOpen }) => {
     const handleRemoveMedia = (url) => {
         let MediaTemp = mediaFile ? [...mediaFile] : [];
         // Create a copy of the array
-        // if using MediaTemp = MediaFile so when MediaTemp change , mediaFile also changes and MediaTemp change again
+        //  
         let startIndex = MediaTemp.findIndex(element => element === url);
         console.log(startIndex, url, MediaTemp, 'check');
         MediaTemp.splice(startIndex, 1); // Remove the element from the copied array return a elemet deleted

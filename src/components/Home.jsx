@@ -9,9 +9,9 @@ import { Nav } from './Nav';
 import { CreatePostAPI } from './../api/PostAPI';
 
 export const Home = () => {
-  const dispatch = useDispatch()
+  
   //redux
-  const AuthData = useSelector(state => state.AuthReducer.user)
+ 
  
   const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
   return (

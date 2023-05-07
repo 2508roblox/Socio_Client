@@ -5,9 +5,12 @@ import DarkModeReducer from './DarkModeReducer'
 import AuthReducer from './AuthReducer';
 import UserReducer from './UserReducer';
 import PostReducer from './PostReducer';
+import Conversation from './Conversation';
+import OnlineUserReducer from './OnlineUserReducer';
+import TempDataReducer from './TempDataReducer';
 
 
 export const rootReducer = combineReducers({
-    DarkModeReducer, AuthReducer, UserReducer, PostReducer
+    DarkModeReducer, AuthReducer, UserReducer, PostReducer, Conversation, OnlineUserReducer, TempDataReducer
 
 })

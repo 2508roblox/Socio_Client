@@ -9,6 +9,7 @@ import { BioEdit } from './../modals/BioEdit';
 import { UilEnvelopeAlt } from '@iconscout/react-unicons'
 import { UilPhone } from '@iconscout/react-unicons'
 import { UilSwiggy } from '@iconscout/react-unicons'
+import { BasicInfoEdit } from '../modals/BasicInfoEdit'
 export const InfoCard = () => {
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
     const UserData = useSelector(state => state.UserReducer.viewingUser)
@@ -16,6 +17,7 @@ export const InfoCard = () => {
 
     const isAuthProfile = AuthData?._id === UserData?._id
     const [open, setOpen] = useState(false)
+    const [infoOpen, setInfoOpen] = useState(false)
 
     return (
         <div className={`${isDarkMode ? 'dark' : ''} `}>
@@ -24,6 +26,12 @@ export const InfoCard = () => {
                     open={open}
                     setOpen={setOpen}
                 ></BioEdit> : ''
+            }
+            {
+                infoOpen ? <BasicInfoEdit
+                    infoOpen={infoOpen}
+                    setInfoOpen={setInfoOpen}
+                ></BasicInfoEdit> : ''
             }
             <div className="  dark:bg-bgmdark bg-bgmlight rounded-lg p-2 flex flex-col">
                 <div className="flex flex-col gap-2 profileInfo  dark:bg-bgdark bg-bglight rounded-lg p-4">
@@ -44,7 +52,7 @@ export const InfoCard = () => {
                     </div>
                     {
                         isAuthProfile &&
-                        <button className='btn-green bg-blue-500 dark:bg-greenyellow text-white  dark:text-black w-full'>Edit detail</button>
+                        <button onClick={() => { setInfoOpen(true) }}  className='btn-green bg-blue-500 dark:bg-greenyellow text-white  dark:text-black w-full'>Edit detail</button>
 
                     }
                     <div className="skill dark:text-white text-black flex flex-col gap-2">

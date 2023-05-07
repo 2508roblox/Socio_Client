@@ -5,10 +5,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export const UserCard = ({ data, dataType }) => {
+    let [newDataType, setType] = useState(dataType)
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const AuthData = useSelector(state => state.AuthReducer.user)
+    //online
+    const onlineUser = useSelector(state => state.OnlineUserReducer.onlineUser)
+
     // req, requesting, friends
     const [userData, setUserData] = useState(null)
     // state on click
@@ -20,9 +24,13 @@ export const UserCard = ({ data, dataType }) => {
     //- all non friends
 
     const handleFriendRequest = async (e) => {
+
+
         e.preventDefault()
         if (AuthData?._id) {
+
             setAddFriend(true)
+            setType('requesting')
             await axios.post('http://localhost:8080/api/v1/friends/' + data._id + '/request', { userid: AuthData?._id })
         }
     }
@@ -32,10 +40,13 @@ export const UserCard = ({ data, dataType }) => {
         if (AuthData?._id) {
             setIsConFIrmed(true)
             await axios.post('http://localhost:8080/api/v1/friends/' + data?.userid + '/confirm', { userid: AuthData?._id })
+
+
         }
     }
     // remove friend
     const handleRemove = async (e) => {
+
         e.preventDefault()
         console.log(data, 'check client')
         let paramId = AuthData?._id === data?.userid ? data?.friendid : data?.userid
@@ -49,6 +60,8 @@ export const UserCard = ({ data, dataType }) => {
                     }
                 }
             )
+
+
         }
     }
     //- requesting fetch data of users, fetch by key,  if state, props is not changed , it will not re mount and useEffect don't run
@@ -70,16 +83,16 @@ export const UserCard = ({ data, dataType }) => {
 
     //Navigate
     const handleLink = (e) => {
-        e.preventDefault()
+        console.log(newDataType, 'ckadjlkfjasf')
         //get viewing user infomation
-        dispatch({ type: 'COMMUNITY_VIEW_SUCCESSFULLY', payload: userData })
+        dispatch({ type: 'COMMUNITY_VIEW_SUCCESSFULLY', payload: { ...userData, status: newDataType } })
         navigate('../../profile');
 
     }
     const handleLinkData = (e) => {
         e.preventDefault()
         //get viewing user infomation
-        dispatch({ type: 'COMMUNITY_VIEW_SUCCESSFULLY', payload: data })
+        dispatch({ type: 'COMMUNITY_VIEW_SUCCESSFULLY', payload: { ...data, status: newDataType } })
         navigate('../../profile');
 
     }
@@ -91,13 +104,23 @@ export const UserCard = ({ data, dataType }) => {
                 {userData ?
                     <div className="col-span-1 rounded-lg shadow-xl flex flex-col border overflow-hidden border-1 bg-transparent border-white">
                         <img onClick={(e) => { handleLink(e) }} className='w-full sm:h-[280px] ms:h-[300px] md:h-[220px] lg:h-[230px] xl:h-[280px] object-cover  ' src={userData?.avatar || data?.avatar || dfAvatar} alt="" />
-                        <div className="bg-bgmlight animate-pulse  dark:bg-bgmdark p-2 ">
-                            <h1 className='capitalize dark:text-white'>{
-                                dataType === 'requesting' ? userData?.firstname + " " + userData?.lastname : dataType === 'friends' ? userData?.firstname + " " + userData?.lastname :
-                                    dataType === 'request' ? userData?.firstname + " " + userData?.lastname
-                                        : data?.firstname + " " + data?.lastname
 
-                            }</h1>
+                        <div className="bg-bgmlight animate-pulse  dark:bg-bgmdark p-2 ">
+                            <div className="flex flex-row gap-2 items-center" >
+                                <h1 className='capitalize dark:text-white'>{
+                                    dataType === 'requesting' ? userData?.firstname + " " + userData?.lastname : dataType === 'friends' ? userData?.firstname + " " + userData?.lastname :
+                                        dataType === 'request' ? userData?.firstname + " " + userData?.lastname
+                                            : data?.firstname + " " + data?.lastname
+
+                                }
+
+                                </h1>
+                                {onlineUser?.findIndex(user => user.userId === userData?._id) !== -1 ?
+                                    <div className="dot w-[9px] bottom-1 right-0 rounded-full first-line: bg-green-500   h-[9px]"></div>
+                                    :
+                                    <div className="dot w-[9px] bottom-1 right-0 rounded-full    bg-red-600   h-[9px]"></div>
+                                }
+                            </div>
                             <h1 className='text-sm'>@{data?.username || userData?.username}</h1>
                             {dataType === 'friends' ?
 

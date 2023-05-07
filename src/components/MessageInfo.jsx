@@ -10,11 +10,11 @@ import { UilArrowLeft } from '@iconscout/react-unicons'
 export const MessageInfo = ({ isOpen, setIsOpen }) => {
 
     return (
-        <div className={`${isOpen ? 'absolute w-full' : 'hidden'} z-50   xl:relative border-l-2 bg-bgmlight dark:bg-bgmdark rounded-xl h-[100vh]  dark:border-bgdark`}>
+        <div className={`${isOpen ? 'absolute w-full' : 'hidden'} z-50 col-span-3  xl:relative border-l-2 bg-bgmlight dark:bg-bgmdark rounded-xl h-[100vh]  dark:border-bgdark`}>
             <div className="flex flex-col p-4">
 
 
-                <UilArrowLeft onClick={() => { setIsOpen(false) }} className={`w-[2rem] h-[2rem] xl:hidden`}></UilArrowLeft>
+                <UilArrowLeft onClick={() => { setIsOpen(false) }} className={`w-[2rem] h-[2rem]`}></UilArrowLeft>
                 <div className="flex flex-col items-center mb-10 gap-4">
                     <img className='w-[5rem] h-[5rem] rounded-full object-cover' src="https://source.unsplash.com/240x320/?portrait?0" alt="" />
                     <h1>Designer</h1>

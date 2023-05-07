@@ -1,13 +1,42 @@
-import React from 'react'
-import { ChatRoom } from './ChatRoom';
+import React, { useEffect, useState } from 'react'
 import { UilSearch } from '@iconscout/react-unicons'
 import { UilEllipsisH } from '@iconscout/react-unicons'
 import { MessageChatRoom } from './MessageChatRoom';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { GroupChatRoom } from './GroupChatRoom';
 
 export const MessageRoom = ({ setShowMessage }) => {
+    const AuthData = useSelector(state => state.AuthReducer.user)
 
+    const [conversationData, setConversationData] = useState(null) // private
+    const [groupConversation, setGroupConversation] = useState(null) //public
+    useEffect(() => {
+        const getAllConversation = async () => {
+            let Conversations = await axios.get(`http://localhost:8080/api/v1/conversations/${AuthData?._id}`)
+            Conversations = await Conversations.data
+            setConversationData(Conversations)
+            console.log(Conversations)
+        }
+        getAllConversation()
+        return () => {
+            console.log('optimized')
+        }
+    }, [])
+    useEffect(() => {
+        const getAllGroupChat = async () => {
+            let Conversations = await axios.get(`http://localhost:8080/api/v1/conversations/`)
+            Conversations = await Conversations.data
+            setGroupConversation(Conversations)
+            console.log(Conversations)
+        }
+        getAllGroupChat()
+        return () => {
+            console.log('optimized')
+        }
+    }, [])
     return (
-        <div className='col-span-5  xl:col-span-1 overflow-auto'>
+        <div className='col-span-5  xl:col-span-2 overflow-auto'>
             <div className="message dark:bg-bgmdark bg-bgmlight rounded-xl p-4 flex flex-col gap-2">
                 <div className="  flex justify-between items-center dark:text-white text-black">
                     <div className="flex gap-2 items-center">
@@ -29,26 +58,26 @@ export const MessageRoom = ({ setShowMessage }) => {
 
 
                 <div className="RoomSection flex flex-col gap-4">
-                    <div className="">
-                        <h1 className='text-[.8rem] dark:text-gray-300'>Pin Chat</h1>
-                        <div className="pinChat">
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
-                        </div>
-                    </div>
-                    <div className="">
-                        <h1 className='text-[.8rem] dark:text-gray-300'>Group & Channel</h1>
-                        <div className="pinChat">
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
-                        </div>
-                    </div>
+
                     <div className="">
                         <h1 className='text-[.8rem] dark:text-gray-300'>All Message</h1>
+                        <h1>Groups</h1>
+                        {groupConversation && groupConversation.map(data => {
+                            return <GroupChatRoom key={data?._id} setShowMessage={setShowMessage} conversation={data}></GroupChatRoom>
+                        })}
+                        <h1>Friends</h1>
                         <div className="pinChat">
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
-                            <MessageChatRoom setShowMessage={setShowMessage}></MessageChatRoom>
+                            {conversationData &&
+                                conversationData.map((conversation) => {
+                                    return <>
+                                        {console.log('render')}
+                                        <MessageChatRoom key={conversation._id} setShowMessage={setShowMessage} conversation={conversation}></MessageChatRoom>
+                                    </>
+                                })
+
+                            }
+
+
                         </div>
                     </div>
                 </div>
