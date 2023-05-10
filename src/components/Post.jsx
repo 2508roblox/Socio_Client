@@ -53,7 +53,7 @@ export const Post = ({ postData }) => {
         }
         handleGetUserInfo()
         return () => {
-            console.log('clean up')
+            console.log('')
         }
     }, [])
 
@@ -69,7 +69,7 @@ export const Post = ({ postData }) => {
         }
         handleGetUserInfo()
         return () => {
-            console.log('clean up')
+            console.log('')
         }
     }, [])
 

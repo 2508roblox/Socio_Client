@@ -76,11 +76,11 @@ export const BasicInfoEdit = ({ infoOpen, setInfoOpen }) => {
                                         <div className="md:flex flex-row  justify-between">
                                             <div className="flex flex-col capitalize gap-2">
                                                 <h1 className='text-black dark:text-white'>works at</h1>
-                                                <input value={basicInfo?.worksat} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="worksat" id="" />
+                                                <input value={basicInfo?.worksat} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="worksat" id="" />
                                             </div>
                                             <div className="flex flex-col capitalize gap-2">
                                                 <h1 className='text-black dark:text-white'>address</h1>
-                                                <input value={basicInfo?.address} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="address" id="" />
+                                                <input value={basicInfo?.address} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="address" id="" />
 
                                             </div> </div>
                                         <div className="md:flex flex-row  justify-between">
@@ -89,25 +89,25 @@ export const BasicInfoEdit = ({ infoOpen, setInfoOpen }) => {
 
                                                 <div className="flex flex-col capitalize gap-2">
                                                     <h1 className='text-black dark:text-white'>relationship</h1>
-                                                    <input value={basicInfo?.relationship} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="relationship" id="" />
+                                                    <input value={basicInfo?.relationship} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="relationship" id="" />
                                                 </div>
                                             </div>
 
                                             <div className="flex flex-col capitalize gap-2">
                                                 <h1 className='text-black dark:text-white'>hometown</h1>
-                                                <input value={basicInfo?.hometown} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="hometown" id="" />
+                                                <input value={basicInfo?.hometown} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="hometown" id="" />
 
                                             </div>
                                         </div>
                                         <div className="md:flex flex-row  justify-between">
                                             <div className="flex flex-col capitalize gap-2">
                                                 <h1 className='text-black dark:text-white'>phone</h1>
-                                                <input value={basicInfo?.phone} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="phone" id="" />
+                                                <input value={basicInfo?.phone} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="phone" id="" />
                                             </div>
 
                                             <div className="flex flex-col capitalize gap-2">
                                                 <h1 className='text-black dark:text-white'>email</h1>
-                                                <input value={basicInfo?.email} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="email" id="" />
+                                                <input value={basicInfo?.email} onChange={(e) => { handleChangeInput(e) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit ..." name="email" id="" />
                                             </div>
                                         </div>
                                     </div>

@@ -5,6 +5,8 @@ import { GetAllFriends, GetAllUsersNonFriends, GetAllReq, GetAllSentReq } from '
 export const AllUsersAction = (userid) => async (dispatch) => {
     try {
         dispatch({ type: "NON_FRIENDS_STARTING" })
+        dispatch({ type: "REMOVE_USER_POST" })
+
         let res = await GetAllUsersNonFriends(userid)
         let data = res.data
         dispatch({ type: "NON_FRIENDS_SUCCESSFULLY", payload: data })
@@ -17,6 +19,8 @@ export const AllUsersAction = (userid) => async (dispatch) => {
 export const AllFriendsAction = (userid) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_FRIENDS_STARTING" })
+        dispatch({ type: "REMOVE_USER_POST" })
+
         let res = await GetAllFriends(userid)
         let data = res.data
         dispatch({ type: "ALL_FRIENDS_SUCCESSFULLY", payload: data })
@@ -30,6 +34,8 @@ export const AllFriendsAction = (userid) => async (dispatch) => {
 export const AllReqAction = (userid) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_REQ_STARTING" })
+        dispatch({ type: "REMOVE_USER_POST" })
+
         let res = await GetAllReq(userid)
         let data = res.data
         dispatch({ type: "ALL_REQ_SUCCESSFULLY", payload: data })
@@ -42,6 +48,8 @@ export const AllReqAction = (userid) => async (dispatch) => {
 export const AllSentReqAction = (userid) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_SENT_REQ_STARTING" })
+        dispatch({ type: "REMOVE_USER_POST" })
+
         let res = await GetAllSentReq(userid)
         let data = res.data
         dispatch({ type: "ALL_SENT_REQ_SUCCESSFULLY", payload: data })

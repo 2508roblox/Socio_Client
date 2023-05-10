@@ -56,7 +56,7 @@ export const BioEdit = ({ open, setOpen }) => {
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-bgmlight dark:bg-bgmdark text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                     <div className="p-4 flex gap-4 flex-col">
                                         <h1 className='text-black dark:text-white'>Your Description</h1>
-                                        <input value={desc} onChange={(e) => { setDesc(e.target.value) }} class="   p-2 text-sm text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit your description..." name="" id="" />
+                                        <input value={desc} onChange={(e) => { setDesc(e.target.value) }} class="   p-2 text-sm text-black dark:text-white bg-bglight rounded-md shadow-sm bg-blue-white dark:bg-bgdark " type="text" placeholder=" Edit your description..." name="" id="" />
                                     </div>
                                     <div className="  px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 bg-bgmlight dark:bg-bgmdark ">
                                         <button

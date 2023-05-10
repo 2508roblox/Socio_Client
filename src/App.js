@@ -15,6 +15,7 @@ import { SignUpPpage } from './page/SignUpPpage';
 import { CommunityPage } from './page/CommunityPage';
 //socket
 import { socket } from './socket'
+import { Welcome } from './page/Welcome';
 
 function App() {
   //config
@@ -43,7 +44,7 @@ function App() {
 
       <div className='bg-bglight dark:bg-bgdark flex flex-col justify-start' >
         <Routes>
-          <Route path="/*" Component={Home} /> {/* Use the render prop to specify the component to be rendered */}
+          <Route path="/*" Component={AuthData?._id ? Home : Welcome} /> {/* Use the render prop to specify the component to be rendered */}
           <Route path="/profile/*" Component={Profile} /> {/* Use the render prop to specify the component to be rendered */}
           <Route path="/ecommerce/*" Component={EcommercePage} /> {/* Use the render prop to specify the component to be rendered */}
           <Route path="/message/*" Component={MessagePage} /> {/* Use the render prop to specify the component to be rendered */}

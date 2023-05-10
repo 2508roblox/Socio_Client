@@ -17,6 +17,8 @@ export const HomeLeft = () => {
 
     const handleAuthProfile = () => {
         dispatch({ type: 'AUTH_VIEW_SUCCESSFULLY', payload: UserData })
+        dispatch({ type: "REMOVE_USER_POST" })
+
         navigate('../profile')
     }
     return (

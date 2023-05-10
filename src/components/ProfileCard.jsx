@@ -63,8 +63,8 @@ export const ProfileCard = () => {
     const handleCreateConversation = async () => {
         await axios.post('http://localhost:8080/api/v1/conversations/create/', {
 
-            "userid": "644f4058a9fc7a5b5accf185",
-            "otherid": "644f325ea9fc7a5b5accf134"
+            "userid": AuthData?._id,
+            "otherid": UserData?._id
 
 
         })

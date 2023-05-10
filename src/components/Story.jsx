@@ -1,12 +1,12 @@
 import React from 'react'
 
-export const Story = () => {
+export const Story = ({ data }) => {
     let randomImg = `https://source.unsplash.com/240x320/?portrait?${~~(Math.random() * 13)}`
     let randomAvatar = `https://source.unsplash.com/240x320/?portrait?${~~(Math.random() * 12)}`
     return (
         <div className="overflow-hidden min-w-[120px] flex text-black dark:text-white gap-2 flex-col items-center justify-center">
             <div className="overflow-hidden  p-[1px] border-4 items-center flex relative border-white dark:border-bgmdark rounded-2xl">
-                <img className='rounded-xl h-[165px] object-cover' width={'120px'} src={randomImg} alt="" />
+                <img className='rounded-xl h-[165px] object-cover' width={'120px'} src={data || randomImg} alt="" />
                 <div style={{
                     'backgroundColor': 'rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(2px)'
