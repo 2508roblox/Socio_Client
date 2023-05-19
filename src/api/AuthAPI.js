@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = 'http://localhost:8080/api/v1/auth';
+const baseURL = 'https://beta-server-8uoh.onrender.com/api/v1/auth';
 
 export const RegisterAPI = async (data) => {
     try {
@@ -8,7 +8,7 @@ export const RegisterAPI = async (data) => {
         return response
     } catch (error) {
         console.log(error) // thêm dòng này để xem lỗi thực sự là gì
-      
+
     }
 };
 export const LoginAPI = async (data) => {
@@ -17,6 +17,6 @@ export const LoginAPI = async (data) => {
         return response
     } catch (error) {
         console.log(error) // thêm dòng này để xem lỗi thực sự là gì
-        
+
     }
 };

@@ -13,7 +13,7 @@ export const MessageRoom = ({ setShowMessage }) => {
     const [groupConversation, setGroupConversation] = useState(null) //public
     useEffect(() => {
         const getAllConversation = async () => {
-            let Conversations = await axios.get(`http://localhost:8080/api/v1/conversations/${AuthData?._id}`)
+            let Conversations = await axios.get(`https://beta-server-8uoh.onrender.com/api/v1/conversations/${AuthData?._id}`)
             Conversations = await Conversations.data
             setConversationData(Conversations)
             console.log(Conversations)
@@ -25,7 +25,7 @@ export const MessageRoom = ({ setShowMessage }) => {
     }, [])
     useEffect(() => {
         const getAllGroupChat = async () => {
-            let Conversations = await axios.get(`http://localhost:8080/api/v1/conversations/`)
+            let Conversations = await axios.get(`https://beta-server-8uoh.onrender.com/api/v1/conversations/`)
             Conversations = await Conversations.data
             setGroupConversation(Conversations)
             console.log(Conversations)

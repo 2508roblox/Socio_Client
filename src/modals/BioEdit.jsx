@@ -19,7 +19,7 @@ export const BioEdit = ({ open, setOpen }) => {
     const handleChangeDesc = async () => {
         dispatch({ type: 'UPDATE_INFO', payload: { desc: desc } })
         dispatch({ type: 'UPDATE_AUTH_INFO', payload: { desc: desc } })
-        await axios.put(`http://localhost:8080/api/v1/users/${UserData._id}`,
+        await axios.put(`https://beta-server-8uoh.onrender.com/api/v1/users/${UserData._id}`,
             {
                 curentuserid: UserData._id,
                 desc: desc

@@ -22,7 +22,7 @@ export const MessageHeader = ({ setIsOpen, setShowMessage }) => {
                 let Members = Conversation.participants
                 let otherId = Members.filter(e => e !== AuthData?._id)
                 console.log(otherId)
-                let res = await axios.get(`http://localhost:8080/api/v1/users/${otherId}`)
+                let res = await axios.get(`https://beta-server-8uoh.onrender.com/api/v1/users/${otherId}`)
                 let data = await res.data
                 setUserData(data)
             }

@@ -43,7 +43,7 @@ export const Post = ({ postData }) => {
                     setUserInfo(existTemp)
                 } else {
 
-                    let res = await axios.get('http://localhost:8080/api/v1/users/' + postData.userid)
+                    let res = await axios.get('https://beta-server-8uoh.onrender.com/api/v1/users/' + postData.userid)
                     let userData = await res.data
                     dispatch({ type: 'SAVE_USER_INFO', payload: userData })
                     setUserInfo(userData)
@@ -77,11 +77,11 @@ export const Post = ({ postData }) => {
         if (!heartStatus) {
             setLikesCount(prev => prev + 1)
             setHeartStatus(true)
-            await axios.put(`http://localhost:8080/api/v1/posts/${postData._id}/like`, { userid: AuthData?._id })
+            await axios.put(`https://beta-server-8uoh.onrender.com/api/v1/posts/${postData._id}/like`, { userid: AuthData?._id })
         } else {
             setLikesCount(prev => prev - 1)
             setHeartStatus(false)
-            await axios.put(`http://localhost:8080/api/v1/posts/${postData._id}/unlike`, { userid: AuthData?._id })
+            await axios.put(`https://beta-server-8uoh.onrender.com/api/v1/posts/${postData._id}/unlike`, { userid: AuthData?._id })
 
         }
     }
@@ -104,17 +104,21 @@ export const Post = ({ postData }) => {
 
                                 <div className="">
                                     <h1 className='text-gray-500 text-sm flex items-center gap-2'>@{userInfo.username} <UilCheck className='bg-blue-500 rounded-full w-[14px] h-[14px] text-white dark:text-white' ></UilCheck></h1>
-                                    <p className='text-black dark:text-white flex items-center gap-2'>{userInfo.firstname + " " + userInfo.lastname} <span className='dot w-1 h-1 rounded-full dark:bg-greenyellow bg-blue-500'></span> <span className='dark:text-greenyellow text-blue-500 text-sm'> {moment(postData.createdAt).fromNow() === 'a few seconds ago' ? 'just now' : moment(postData.createdAt).fromNow()}</span> </p>
+                                    <p className='text-black dark:text-white flex items-center capitalize gap-2'>{userInfo.firstname + " " + userInfo.lastname} <span className='dot w-1 h-1 rounded-full dark:bg-greenyellow bg-blue-500'></span> <span className='dark:text-greenyellow text-blue-500 text-sm'> {moment(postData.createdAt).fromNow() === 'a few seconds ago' ? 'just now' : moment(postData.createdAt).fromNow()}</span> </p>
                                 </div>
                             </div>
                             <UilEllipsisV className='text-black '></UilEllipsisV>
 
                         </div>
-                        <p onClick={() => {
-                            setAllContent(prev => !prev)
-                        }} className={`dark:text-gray-300 text-gray-800 text-sm ${allContent ? '' : 'overflow-hidden text-ellipsis'}`} style={{ minHeight: '3em', display: '-webkit-box', WebkitBoxOrient: `${allContent ? '' : 'vertical'}`, WebkitLineClamp: `${allContent ? '' : 2}` }}>
-                            {postData.content} {'-' + userInfo._id}
-                        </p>
+                        {
+                            postData.content &&
+                            <p onClick={() => {
+                                setAllContent(prev => !prev)
+                            }} className={`dark:text-gray-300 text-gray-800 text-sm ${allContent ? '' : 'overflow-hidden text-ellipsis'}`} style={{ minHeight: '3em', display: '-webkit-box', WebkitBoxOrient: `${allContent ? '' : 'vertical'}`, WebkitLineClamp: `${allContent ? '' : 2}` }}>
+                                {postData.content}
+                            </p>
+                        }
+
                         <div className={`grid ${imgs.length === 1 ? 'grid-cols-1' : imgs.length === 2 ? 'grid-cols-2' : 'grid-cols-2'} gap-2`}>
                             {imgs && imgs.length > 0 && imgs.map(img => {
                                 return (
@@ -126,19 +130,19 @@ export const Post = ({ postData }) => {
                         <div className="icon-btn flex flex-row justify-between">
                             <div className="text-black dark:text-white flex  items-center gap-4">
                                 {likesCount}
-                                {heartStatus ? <p
+                                {heartStatus ? <p className='mb-[6px]'
 
                                     onClick={() => {
                                         handleLikePost()
                                     }}
-                                >❤️</p> : <p
+                                >❤️</p> : <p className='mb-[6px]'
                                     onClick={() => {
                                         handleLikePost()
                                     }}
                                 >🤍</p>}
 
-                                <UilCommentAltDots width="35px" height="35px"></UilCommentAltDots>
-                                <UilShareAlt width="35px" height="35px"></UilShareAlt>
+                                <UilCommentAltDots width="20px" height="20px"></UilCommentAltDots>
+                                <UilShareAlt width="20px" height="20px"></UilShareAlt>
                             </div>
                             <button className='dark:bg-greenyellow bg-blue-500 text-white dark:text-black p-1  px-2 rounded-lg'>Hire me</button>
                         </div>

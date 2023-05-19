@@ -46,7 +46,7 @@ export const Messages = ({ setShowMessage, showMessage }) => {
 
         }
         setMessagesData(prev => [...prev, bodyReq])
-        await axios.post(`http://localhost:8080/api/v1/messages/create`, bodyReq)
+        await axios.post(`https://beta-server-8uoh.onrender.com/api/v1/messages/create`, bodyReq)
 
 
 
@@ -65,7 +65,7 @@ export const Messages = ({ setShowMessage, showMessage }) => {
     }, [socket]);
     useEffect(() => {
         const GetAllMessages = async () => {
-            let Messages = await axios.get(`http://localhost:8080/api/v1/messages/${Conversation?._id}/allMessages`)
+            let Messages = await axios.get(`https://beta-server-8uoh.onrender.com/api/v1/messages/${Conversation?._id}/allMessages`)
             Messages = await Messages.data
             setMessagesData(Messages)
         }

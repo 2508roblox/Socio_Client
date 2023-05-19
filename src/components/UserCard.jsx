@@ -31,7 +31,7 @@ export const UserCard = ({ data, dataType }) => {
 
             setAddFriend(true)
             setType('requesting')
-            await axios.post('http://localhost:8080/api/v1/friends/' + data._id + '/request', { userid: AuthData?._id })
+            await axios.post('https://beta-server-8uoh.onrender.com/api/v1/friends/' + data._id + '/request', { userid: AuthData?._id })
         }
     }
     //-confirmed requests
@@ -39,7 +39,7 @@ export const UserCard = ({ data, dataType }) => {
         e.preventDefault()
         if (AuthData?._id) {
             setIsConFIrmed(true)
-            await axios.post('http://localhost:8080/api/v1/friends/' + data?.userid + '/confirm', { userid: AuthData?._id })
+            await axios.post('https://beta-server-8uoh.onrender.com/api/v1/friends/' + data?.userid + '/confirm', { userid: AuthData?._id })
 
 
         }
@@ -52,7 +52,7 @@ export const UserCard = ({ data, dataType }) => {
         let paramId = AuthData?._id === data?.userid ? data?.friendid : data?.userid
         if (AuthData?._id) {
             setIsRemoved(true)
-            await axios.delete('http://localhost:8080/api/v1/friends/' + paramId + '/remove',
+            await axios.delete('https://beta-server-8uoh.onrender.com/api/v1/friends/' + paramId + '/remove',
 
                 {
                     data: {
@@ -71,7 +71,7 @@ export const UserCard = ({ data, dataType }) => {
         const getUserData = async () => {
             let paramId = AuthData?._id === data?.userid ? data?.friendid : data?.userid
 
-            let res = await axios.get('http://localhost:8080/api/v1/users/' + paramId)
+            let res = await axios.get('https://beta-server-8uoh.onrender.com/api/v1/users/' + paramId)
             let UserInfo = await res.data
             setUserData(UserInfo)
         }
@@ -102,10 +102,10 @@ export const UserCard = ({ data, dataType }) => {
         return (
             <>
                 {userData ?
-                    <div className="col-span-1 rounded-lg shadow-xl flex flex-col border overflow-hidden border-1 bg-transparent border-white">
+                    <div className="col-span-1 rounded-lg shadow-xl  flex flex-col border overflow-hidden border-1 bg-transparent border-white">
                         <img onClick={(e) => { handleLink(e) }} className='w-full sm:h-[280px] ms:h-[300px] md:h-[220px] lg:h-[230px] xl:h-[280px] object-cover  ' src={userData?.avatar || data?.avatar || dfAvatar} alt="" />
 
-                        <div className="bg-bgmlight animate-pulse  dark:bg-bgmdark p-2 ">
+                        <div className="bg-bgmlight   dark:bg-bgmdark p-2 ">
                             <div className="flex flex-row gap-2 items-center" >
                                 <h1 className='capitalize dark:text-white'>{
                                     dataType === 'requesting' ? userData?.firstname + " " + userData?.lastname : dataType === 'friends' ? userData?.firstname + " " + userData?.lastname :
@@ -199,7 +199,7 @@ export const UserCard = ({ data, dataType }) => {
         )
     } else {
         return (
-            <div className="col-span-1 rounded-lg shadow-xl animate-pulse  border overflow-hidden border-1 border-white">
+            <div className="col-span-1 rounded-lg shadow-xl  border overflow-hidden border-1 border-white">
                 <img onClick={(e) => { handleLinkData(e) }} className='w-full sm:h-[280px] ms:h-[300px] md:h-[220px] lg:h-[230px] xl:h-[280px] object-cover ' src={data?.avatar || dfAvatar} alt="" />
                 <div className="bg-bgmlight  dark:bg-bgmdark p-2 ">
                     <h1 className='capitalize dark:text-white'>{

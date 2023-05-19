@@ -4,6 +4,7 @@ const initState = {
     isLoading: false,
     isWrongPassword: false,
     isNotExistUser: false,
+    animation: true,
 }
 
 const AuthReducer = (state = initState, action) => {
@@ -15,6 +16,9 @@ const AuthReducer = (state = initState, action) => {
             return { ...state, isLoading: false, isWrongPassword: false, user: action.payload };
         case "IS_WRONG_PASSWORD":
             return { ...state, isWrongPassword: true, isLoading: false };
+        //intro animation
+        case "SHOWED":
+            return { ...state, animation: false };
         // register
         case "IS_REGISTERING":
             return { ...state, isLoading: true, isWrongPassword: false, isErr: false };

@@ -19,7 +19,7 @@ export const BasicInfoEdit = ({ infoOpen, setInfoOpen }) => {
     const handleChangeInput = async (e) => {
         // dispatch({ type: 'UPDATE_INFO', payload: { desc: desc } })
         // dispatch({ type: 'UPDATE_AUTH_INFO', payload: { desc: desc } })
-        // await axios.put(`http://localhost:8080/api/v1/users/${UserData._id}`,
+        // await axios.put(`https://beta-server-8uoh.onrender.com/api/v1/users/${UserData._id}`,
         //     {
         //         curentuserid: UserData._id,
         //         desc: desc
@@ -32,7 +32,7 @@ export const BasicInfoEdit = ({ infoOpen, setInfoOpen }) => {
     const handleUpdate = async () => {
         dispatch({ type: 'UPDATE_INFO', payload: basicInfo })
         dispatch({ type: 'UPDATE_AUTH_INFO', payload: basicInfo })
-        await axios.put(`http://localhost:8080/api/v1/users/${UserData._id}`,
+        await axios.put(`https://beta-server-8uoh.onrender.com/api/v1/users/${UserData._id}`,
             {
                 curentuserid: UserData._id,
                 worksat: basicInfo.worksat,

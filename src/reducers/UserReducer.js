@@ -25,6 +25,17 @@ export default function UserReducer(state = initialState, action) {
         case 'NON_FRIENDS_ERROR': {
             return { isErr: true, isLoading: false };
         }
+        //-- more
+        case 'NON_FRIENDS_MORE': {
+            return {
+                ...state, isLoading: false, isErr: false, allUsersNonFriends: state.allUsersNonFriends.concat(action.payload), allSentRequests: null,
+                allRequests: null,
+                allFriends: null,
+            };
+        }
+
+
+
 
 
         // Friends

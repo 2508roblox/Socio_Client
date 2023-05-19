@@ -15,12 +15,12 @@ export const Message = ({ messagesData, messagesEndRef }) => {
             {messagesData &&
                 <div ref={messagesEndRef} className='messages  p-4 col-span-2'>
 
-                    {messagesData.map(mess => {
+                    {messagesData?.map(mess => {
                         { console.log('checkMess', mess) }
 
                         return (
                             AuthData?._id === mess?.userid ?
-                                <div className="chat chat-end">
+                                <div key={mess?._id} className="chat chat-end">
                                     <div className="chat-image avatar">
                                         <div className="w-10 rounded-full">
                                             <img src={AuthData?.avatar || dfAvatar} />
@@ -37,14 +37,14 @@ export const Message = ({ messagesData, messagesEndRef }) => {
                                     </div>
                                     <div className="chat-bubble">{mess.content}</div>
                                     <div className="chat-footer opacity-50">
-                                        Seen at 12:46
+
                                     </div>
                                 </div>
                                 :
-                                <div className="chat chat-start">
+                                <div key={mess?._id} className="chat chat-start">
                                     <div className="chat-image avatar">
                                         <div className="w-10 rounded-full">
-                                            <img src={mess?.avatar.length > 20 ? mess?.avatar : dfAvatar} />
+                                            <img src={mess?.avatar?.length > 20 ? mess?.avatar : dfAvatar} />
                                             {onlineUser?.findIndex(user => user.userId === mess?.userid) !== -1 ?
                                                 <div className="dot w-[9px] bottom-1 right-0 rounded-full first-line: bg-green-500 absolute h-[9px]"></div>
                                                 :

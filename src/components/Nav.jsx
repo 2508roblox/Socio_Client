@@ -19,14 +19,15 @@ import dfCover8 from '../assets/img/df_cover8.jpg';
 import dfCover9 from '../assets/img/df_cover9.jpg';
 import dfCover10 from '../assets/img/df_cover10.jpg';
 import logo from '../assets/img/logo.png'
-
+import logo2 from '../assets/img/logodark.png'
+import logoli from '../assets/img/newlogolight.png'
+import logoda from '../assets/img/newlogodark.png'
 export const Nav = () => {
 
     //config
     const dispatch = useDispatch()
     //state
 
-    const [acticeIcon, setActiveIcon] = useState('home')
     const [isOpenSetting, setIsOpenSetting] = useState(false)
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
     const [isDarkTheme, setIsDarkTheme] = useState(isDarkMode);
@@ -34,6 +35,7 @@ export const Nav = () => {
     const UserData = useSelector(state => state.AuthReducer.user)
     const navigate = useNavigate();
     const AuthData = useSelector(state => state.AuthReducer.user)
+    const isActive = useSelector(state => state.NavReducer.isActive)
 
 
     // effect 
@@ -114,8 +116,17 @@ export const Nav = () => {
                     </div>
                     <div className="hidden md:relative  md:grid grid-cols-1 md:grid-cols-4 py-4 items-center px-4">
                         <div className=" hidden md:flex justify-between items-center text-black dark:text-white gap-4">
-                            <Link to={'../'} >
-                                <img width="90px" height="90px" src={logo} alt="" />
+                            <Link to={'../'} onClick={() => {
+                                dispatch({ type: 'HOME' })
+
+                            }}>
+                                {isDarkTheme ?
+                                    <img width="60px" height="90px" src={logoda} alt="" />
+
+                                    :
+                                    <img width="60px" height="90px" src={logoli} alt="" />
+
+                                }
 
                             </Link>
 
@@ -125,38 +136,40 @@ export const Nav = () => {
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../'}>
                                     <UilEstate onClick={() => {
-                                        setActiveIcon((prev) => 'home')
-                                    }} className={` ${acticeIcon === 'home' ? 'text-blue-500 dark:text-greenyellow          ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'HOME' })
+                                    }} className={` ${isActive === 'home' ? 'text-blue-500 dark:text-greenyellow          ' : 'text-black dark:text-white'}`}>
                                     </UilEstate>
                                 </Link>
-                                <div className={`${acticeIcon === 'home' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'home' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../ecommerce'}>
                                     <UilShop onClick={() => {
-                                        setActiveIcon((prev) => 'market')
-                                    }} className={` ${acticeIcon === 'market' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'MARKETPLACE' })
+                                    }} className={` ${isActive === 'marketplace' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
                                     </UilShop>
                                 </Link>
-                                <div className={`${acticeIcon === 'market' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'marketplace' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../message'}>
                                     <UilHipchat onClick={() => {
-                                        setActiveIcon((prev) => 'message')
-                                    }} className={` ${acticeIcon === 'message' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'CHAT' })
+
+                                    }} className={` ${isActive === 'chat' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
                                     </UilHipchat>
                                 </Link>
-                                <div className={`${acticeIcon === 'message' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'chat' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../community'}>
                                     <UilUsersAlt onClick={() => {
-                                        setActiveIcon((prev) => 'group')
-                                    }} className={` ${acticeIcon === 'group' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'PEOPLE' })
+
+                                    }} className={` ${isActive === 'people' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
                                     </UilUsersAlt>
                                 </Link>
-                                <div className={`${acticeIcon === 'group' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'people' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
 
 
@@ -234,7 +247,10 @@ export const Nav = () => {
 
                     <div className="fixed rounded-xl  dark:bg-bgmdark bg-bgmlight shadow-md  bottom-0 left-2 right-2 md:hidden  grid grid-cols-1 md:grid-cols-4 py-4 items-center px-4">
                         <div className=" hidden md:flex justify-between items-center text-black dark:text-white gap-4">
-                            <Link to={'../'} >               <UilFacebook width="50px" height="50px" className='text-blue-500 dark:text-greenyellow '></UilFacebook>
+                            <Link to={'../'} onClick={() => {
+                                dispatch({ type: 'HOME' })
+
+                            }}>               <UilFacebook width="50px" height="50px" className='text-blue-500 dark:text-greenyellow '></UilFacebook>
                             </Link>
 
                             <input className='bg-bgmdark dark:bg-bgmlight shadow-md rounded-2xl p-2 w-full' type="text" placeholder='# Explore' />
@@ -243,38 +259,38 @@ export const Nav = () => {
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../'}>
                                     <UilEstate onClick={() => {
-                                        setActiveIcon((prev) => 'home')
-                                    }} className={` ${acticeIcon === 'home' ? 'text-blue-500 dark:text-greenyellow          ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'HOME' })
+                                    }} className={` ${isActive === 'home' ? 'text-blue-500 dark:text-greenyellow          ' : 'text-black dark:text-white'}`}>
                                     </UilEstate>
                                 </Link>
-                                <div className={`${acticeIcon === 'home' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'home' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../ecommerce'}>
                                     <UilShop onClick={() => {
-                                        setActiveIcon((prev) => 'market')
-                                    }} className={` ${acticeIcon === 'market' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'MARKETPLACE' })
+                                    }} className={` ${isActive === 'marketplace' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
                                     </UilShop>
                                 </Link>
-                                <div className={`${acticeIcon === 'market' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'marketplace' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../message'}>
                                     <UilHipchat onClick={() => {
-                                        setActiveIcon((prev) => 'message')
-                                    }} className={` ${acticeIcon === 'message' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'CHAT' })
+                                    }} className={` ${isActive === 'chat' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
                                     </UilHipchat>
                                 </Link>
-                                <div className={`${acticeIcon === 'message' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'chat' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
                                 <Link to={'../community'}>
                                     <UilUsersAlt onClick={() => {
-                                        setActiveIcon((prev) => 'group')
-                                    }} className={` ${acticeIcon === 'group' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
+                                        dispatch({ type: 'PEOPLE' })
+                                    }} className={` ${isActive === 'people' ? 'text-blue-500 dark:text-greenyellow        ' : 'text-black dark:text-white'}`}>
                                     </UilUsersAlt>
                                 </Link>
-                                <div className={`${acticeIcon === 'group' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
+                                <div className={`${isActive === 'people' ? 'w-1 h-1 rounded-full         bg-blue-500 dark:bg-greenyellow' : 'w-0 h-0 bg-transparent'}`}></div>
                             </div>
 
 
@@ -293,13 +309,19 @@ export const Nav = () => {
                     :
                     // welcome nav
                     <>
-                        <div className="lg:px-[12rem] md:relative justify-between  flex py-4 items-center px-4">
+                        <div className="px-[2rem] lg:px-[2rem] xl:px-[10rem]  md:relative justify-between  flex py-4 items-center  ">
                             <div className="   md:flex justify-between items-center text-black dark:text-white gap-4">
                                 <Link to={'../'} >
-                                    <img width="90px" height="90px" src={logo} alt="" />
+                                    {isDarkTheme ?
+                                        <img width="40px" height="90px" src={logoda} alt="" />
+
+                                        :
+                                        <img width="40px" height="90px" src={logoli} alt="" />
+
+                                    }
 
                                 </Link>
-                                <h1 className='hidden lg:block text-blue-600 dark:text-greenyellow text-[1.8rem]'>Socio</h1>
+                                <h1 className='hidden lg:block text-black dark:text-white text-[1.8rem]'>Socio</h1>
                             </div>
 
                             <div className="   relative flex align-middle  items-center gap-2 text-black dark:text-white  rounded-xl px-4 py-2 justify-end " >

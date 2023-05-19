@@ -25,6 +25,8 @@ import dfCover10 from '../assets/img/df_cover10.jpg';
 import { ProfileEditCover } from './../modals/ProfileEditCover';
 import { ProflieEditAvatar } from './../modals/ProfileEditAvatar';
 import axios from 'axios'
+import isAdmin from '../assets/img/admin2.png'
+
 export const ProfileCard = () => {
     //config
     const dispatch = useDispatch()
@@ -49,19 +51,19 @@ export const ProfileCard = () => {
             if (UserData?.status === 'request') {
                 setAccept(true)
                 dispatch({ type: "UPDATE_INFO", payload: { status: 'friends' } })
-                await axios.post('http://localhost:8080/api/v1/friends/' + UserData?._id + '/confirm', { userid: AuthData?._id })
+                await axios.post('https://beta-server-8uoh.onrender.com/api/v1/friends/' + UserData?._id + '/confirm', { userid: AuthData?._id })
             } else {
                 setPending(true)
                 console.log(UserData, 'zxc')
                 // update redux userview 
                 dispatch({ type: "UPDATE_INFO", payload: { status: 'requesting' } })
-                await axios.post('http://localhost:8080/api/v1/friends/' + UserData._id + '/request', { userid: AuthData?._id })
+                await axios.post('https://beta-server-8uoh.onrender.com/api/v1/friends/' + UserData._id + '/request', { userid: AuthData?._id })
             }
 
         }
     }
     const handleCreateConversation = async () => {
-        await axios.post('http://localhost:8080/api/v1/conversations/create/', {
+        await axios.post('https://beta-server-8uoh.onrender.com/api/v1/conversations/create/', {
 
             "userid": AuthData?._id,
             "otherid": UserData?._id
@@ -94,15 +96,18 @@ export const ProfileCard = () => {
                                         <div className="dot w-[15px] bottom-3 left-4 rounded-full    bg-red-600 absolute h-[15px]"></div>
                                     }
                                 </div>
+
                                 {UserData?._id === AuthData?._id ?
                                     <UilCamera onClick={() => { setOpenUploadAvatar(prev => !prev) }} className='rounded-full w-[40px] h-[40px] md:w-[40px] md:h-[40px] absolute bottom-1 right-1 md:bottom-3 md:right-3 bg-white dark:bg-black md:rounded-md p-1'></UilCamera>
                                     : ''
                                 }
                             </div>
+
                             <div className="md:text-start text-center">
-                                <h1 className=' ml-6 md:ml-0 flex gap-2 md:justify-start justify-center items-center text-xl'>
+                                <h1 className=' ml-6 md:ml-0 flex gap-2 md:justify-start relative justify-center items-center text-xl'>
                                     <p className='capitalize'>{UserData?.firstname + ' ' + UserData?.lastname}</p>
                                     <UilSetting></UilSetting>
+
                                     <div className="hidden md:block">
                                         {onlineUser?.findIndex(user => user.userId === UserData?._id) !== -1 ?
                                             <div className="dot w-[15px]  rounded-full first-line: bg-green-500   h-[15px]"></div>
@@ -110,6 +115,11 @@ export const ProfileCard = () => {
                                             <div className="dot w-[15px]   rounded-full    bg-red-600   h-[15px]"></div>
                                         }
                                     </div>
+                                    {
+                                        UserData?.isAdmin &&
+                                        <img width={'90px'} height={'90px'} className=' absolute left-[-4rem] md:left-[8rem] ' src={isAdmin} alt="" />
+                                    }
+
                                 </h1>
                                 <p className='text-sm'>@{UserData?.username}</p>
                                 <p className='text-[.7rem] text-gray-400'>{UserData?.desc}

@@ -1,25 +1,49 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import dfAvatar from '../assets/img/defaultAvatar.png';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export const AnotherUserCard = () => {
+export const AnotherUserCard = ({ data }) => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const isDarkMode = useSelector(state => state.DarkModeReducer.isDarkMode)
+    const AuthData = useSelector(state => state.AuthReducer?.user)
+    let [newDataType, setType] = useState('')
+    const [isAccept, setIsAccept] = useState(false)
+    const handleAccept = async (e) => {
+        e.preventDefault()
+        setIsAccept(true)
+        //sent req
+        setType('requesting')
 
+        await axios.post('https://beta-server-8uoh.onrender.com/api/v1/friends/' + data._id + '/request', { userid: AuthData?._id })
+
+    }
+    const handleLink = (e) => {
+        //get viewing user infomation
+        dispatch({ type: 'COMMUNITY_VIEW_SUCCESSFULLY', payload: { ...data, status: newDataType } })
+        navigate('../../profile');
+
+    }
     return (
         <div className={`${isDarkMode ? 'dark' : ' '}     `}>
 
-            <div className="mb-4   shadow-lg flex flex-col gap-2 p-4 dark:bg-btnGrayLight bg-bglight rounded-xl rounded-xl">
-                <img className='rounded-xl w-full' src="https://c4.wallpaperflare.com/wallpaper/346/517/218/digital-art-artwork-illustration-environment-purple-background-hd-wallpaper-preview.jpg" alt="" />
-                <div className="">
-                    <h1>David Joins</h1>
-                    <div className="flex gap-[-1rem] items-center">
-                        <img className='rounded-full' width={'20px'} src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
-                        <img className='rounded-full' width={'20px'} src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
-                        <img className='rounded-full' width={'20px'} src="  https://source.unsplash.com/240x320/?portrait?0" alt="" />
-                        <p className='mx-2 text-gray-500'>3 Mutual friends</p>
-                    </div>
+            <div className="mb-4   shadow-lg flex flex-col gap-2  dark:bg-btnGrayLight bg-bglight rounded-xl  ">
+                <img onClick={handleLink} className='rounded-md w-[240px] h-[200px] object-cover' src={data?.avatar || dfAvatar} alt="" />
+                <div className=" p-2">
+                    <h1 className='capitalize'>{data?.firstname + " " + data?.lastname}</h1>
+
 
                 </div>
-                <button className='btn-green text-white dark:text-black bg-blue-500 dark:bg-greenyellow w-[12rem]'>Add friend</button>
+
+                {!isAccept ?
+
+                    <button className='btn-green text-white dark:text-black bg-blue-500 dark:bg-greenyellow w-[12rem]' onClick={handleAccept}>Add friend</button>
+                    :
+                    <button className='btn-green text-white dark:text-black bg-blue-500 dark:bg-greenyellow w-[12rem]'>Pending...</button>
+
+                }
             </div>
         </div>
     )
